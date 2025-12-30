@@ -306,7 +306,7 @@ Ujjwal Mishra
 ## 🔗 Links
 
 - **Live Demo**: [https://ujjwal-github-profile.netlify.app/user/shreeramk](https://ujjwal-github-profile.netlify.app/user/shreeramk)
-- **GitHub Repository**: [Add your repository URL here]
+- **GitHub Repository**:  [https://github.com/ujjwalmishra/github-profile-app](https://github.com/ujjwalmishra/github-profile-app)
 
 ---
 
