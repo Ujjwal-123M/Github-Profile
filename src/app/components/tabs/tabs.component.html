@@ -1,0 +1,71 @@
+<div class="tabs-container">
+  <nav class="tabs-nav" role="tablist">
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'overview'"
+      (click)="setActiveTab('overview')"
+      role="tab"
+      [attr.aria-selected]="activeTab === 'overview'">
+      <svg class="tab-icon" aria-hidden="true" height="16" viewBox="0 0 24 24" width="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 7v14"/>
+        <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
+      </svg>
+      <span>Overview</span>
+    </button>
+
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'repositories'"
+      (click)="setActiveTab('repositories')"
+      role="tab"
+      [attr.aria-selected]="activeTab === 'repositories'">
+      <svg class="tab-icon" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor">
+        <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8Zm-9.25 1.75v-1.5a.25.25 0 0 1 .25-.25h8.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-8.5a.25.25 0 0 1-.25-.25Z"></path>
+      </svg>
+      <span>Repositories</span>
+      @if (reposCount !== undefined) {
+        <span class="tab-count">{{ reposCount }}</span>
+      }
+    </button>
+
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'projects'"
+      (click)="setActiveTab('projects')"
+      role="tab"
+      [attr.aria-selected]="activeTab === 'projects'">
+      <svg class="tab-icon" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor">
+        <path d="M1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25V1.75C0 .784.784 0 1.75 0ZM1.5 1.75v12.5c0 .138.112.25.25.25H9.5v-13H1.75a.25.25 0 0 0-.25.25ZM11 14.5h3.25a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25H11ZM5 4.75a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 5 4.75Zm0 3a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1-.75-.75Zm0 3a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path>
+      </svg>
+      <span>Projects</span>
+    </button>
+
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'packages'"
+      (click)="setActiveTab('packages')"
+      role="tab"
+      [attr.aria-selected]="activeTab === 'packages'">
+      <svg class="tab-icon" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor">
+        <path d="m8.878.392 5.25 3.045c.54.314.872.89.872 1.514v6.098a1.75 1.75 0 0 1-.872 1.514l-5.25 3.045a1.75 1.75 0 0 1-1.756 0l-5.25-3.045A1.75 1.75 0 0 1 1 11.049V4.951c0-.624.332-1.201.872-1.514L7.122.392a1.75 1.75 0 0 1 1.756 0ZM7.875 1.69l-4.63 2.685L8 7.133l4.755-2.758-4.63-2.685a.248.248 0 0 0-.25 0ZM2.5 7.685v3.364c0 .09.047.171.125.216l4.625 2.683V8.432Zm6.25 5.683 4.625-2.683a.25.25 0 0 0 .125-.216V7.685L8.75 10.443Z"></path>
+      </svg>
+      <span>Packages</span>
+    </button>
+
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'stars'"
+      (click)="setActiveTab('stars')"
+      role="tab"
+      [attr.aria-selected]="activeTab === 'stars'">
+      <svg class="tab-icon" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor">
+        <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-.418.773c-.392.19-.83-.05-1.02-.462l-1.814-3.585-1.814 3.585a.75.75 0 0 1-1.02.462c-.39-.19-.61-.605-.418-.973l.719-4.192L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.443a.75.75 0 0 1 .698 0l2.77 1.443-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"></path>
+      </svg>
+      <span>Stars</span>
+      @if (starsCount !== undefined) {
+        <span class="tab-count">{{ starsCount }}</span>
+      }
+    </button>
+  </nav>
+</div>
+

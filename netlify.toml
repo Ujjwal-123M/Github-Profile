@@ -1,0 +1,17 @@
+[build]
+  # Build command for Angular application
+  command = "npm run build"
+  # Directory containing built static files (Angular output location)
+  publish = "dist/github-profile-app/browser"
+
+[build.environment]
+  # Node version for build (Netlify supports 18+)
+  NODE_VERSION = "18"
+
+# SPA routing configuration - redirect all routes to index.html for Angular routing
+# This allows Angular Router to handle client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+

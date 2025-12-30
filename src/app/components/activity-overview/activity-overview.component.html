@@ -1,0 +1,99 @@
+@if (loading) {
+  <div class="activity-overview loading">
+    <p>Loading activity overview...</p>
+  </div>
+} @else if (overview) {
+  <div class="activity-overview">
+    @if (organizations.length > 0) {
+      <div class="org-filters">
+        @for (org of organizations; track org.name) {
+          <a [href]="org.html_url" target="_blank" rel="noopener noreferrer" class="org-filter-btn">
+            <span class="org-icon" [style.background-color]="org.color">{{ org.icon }}</span>
+            <span class="org-name">{{ org.name }}</span>
+          </a>
+        }
+      </div>
+    }
+
+    <div class="activity-content-wrapper">
+      <div class="activity-text-section">
+        <h3 class="section-title">Activity overview</h3>
+        <p class="activity-text">
+          Contributed to
+          @for (repo of overview.repos; track repo.name; let isLast = $last) {
+            <a [href]="repo.url" class="repo-link" target="_blank" rel="noopener noreferrer">{{ repo.full_name }}</a>{{ isLast ? '' : ',' }}
+          }
+          @if (overview.contributedRepos > overview.repos.length) {
+            <span> and {{ overview.contributedRepos - overview.repos.length }} other {{ (overview.contributedRepos - overview.repos.length) === 1 ? 'repository' : 'repositories' }}</span>
+          }
+        </p>
+      </div>
+
+      <div class="activity-chart-section">
+        @if (stats) {
+          <div class="radar-chart">
+            <div class="chart-container">
+              <svg class="radar-svg" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- Center point -->
+                <circle cx="90" cy="90" r="3" fill="#ffffff" stroke="#2da44e" stroke-width="2"/>
+                
+                <!-- Axis lines (cross) -->
+                <line x1="90" y1="90" x2="90" y2="10" stroke="#d0d7de" stroke-width="1"/>
+                <line x1="90" y1="90" x2="170" y2="90" stroke="#d0d7de" stroke-width="1"/>
+                <line x1="90" y1="90" x2="90" y2="170" stroke="#d0d7de" stroke-width="1"/>
+                <line x1="90" y1="90" x2="10" y2="90" stroke="#d0d7de" stroke-width="1"/>
+                
+                <!-- Data bars - show bars based on contribution percentages -->
+                @if (getPercentage('codeReviews') > 0) {
+                  <!-- Code review bar (upwards) -->
+                  <line x1="90" y1="90" x2="90" [attr.y2]="codeReviewPosition" stroke="#2da44e" stroke-width="10" stroke-linecap="round"/>
+                  <circle cx="90" [attr.cy]="codeReviewPosition" r="4" fill="#ffffff" stroke="#2da44e" stroke-width="2"/>
+                }
+                @if (getPercentage('pullRequests') > 0) {
+                  <!-- Pull requests bar (downwards) -->
+                  <line x1="90" y1="90" x2="90" [attr.y2]="pullRequestPosition" stroke="#2da44e" stroke-width="10" stroke-linecap="round"/>
+                  <circle cx="90" [attr.cy]="pullRequestPosition" r="4" fill="#ffffff" stroke="#2da44e" stroke-width="2"/>
+                }
+                @if (getPercentage('commits') > 0) {
+                  <!-- Commits bar (leftwards) -->
+                  <line x1="90" y1="90" [attr.x2]="commitsPosition" y2="90" stroke="#2da44e" stroke-width="10" stroke-linecap="round"/>
+                  <circle [attr.cx]="commitsPosition" cy="90" r="4" fill="#ffffff" stroke="#2da44e" stroke-width="2"/>
+                }
+                @if (getPercentage('issues') > 0) {
+                  <!-- Issues bar (rightwards) -->
+                  <line x1="90" y1="90" [attr.x2]="issuesPosition" y2="90" stroke="#2da44e" stroke-width="10" stroke-linecap="round"/>
+                  <circle [attr.cx]="issuesPosition" cy="90" r="4" fill="#ffffff" stroke="#2da44e" stroke-width="2"/>
+                }
+              </svg>
+              
+              <!-- Labels -->
+              @if (getPercentage('codeReviews') > 0) {
+                <div class="chart-label top">{{ getPercentage('codeReviews') }}% Code review</div>
+              } @else {
+                <div class="chart-label top">Code review</div>
+              }
+              
+              @if (getPercentage('issues') > 0) {
+                <div class="chart-label right">{{ getPercentage('issues') }}% Issues</div>
+              } @else {
+                <div class="chart-label right">Issues</div>
+              }
+              
+              @if (getPercentage('pullRequests') > 0) {
+                <div class="chart-label bottom">{{ getPercentage('pullRequests') }}% Pull requests</div>
+              } @else {
+                <div class="chart-label bottom">Pull requests</div>
+              }
+              
+              @if (getPercentage('commits') > 0) {
+                <div class="chart-label left">{{ getPercentage('commits') }}% Commits</div>
+              } @else {
+                <div class="chart-label left">Commits</div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}

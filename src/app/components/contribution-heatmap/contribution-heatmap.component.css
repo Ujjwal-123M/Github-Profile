@@ -1,0 +1,89 @@
+.contribution-heatmap {
+  width: 100%;
+  padding: 16px;
+  border-bottom: 1px solid #d0d7de;
+  margin-bottom: 16px;
+}
+
+.heatmap-header {
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #1f2328;
+}
+
+.year-text {
+  font-weight: 400;
+  color: #656d76;
+}
+
+.heatmap-container {
+  width: 100%;
+}
+
+.chart {
+  width: 100%;
+  min-height: 150px;
+  height: auto;
+  margin-bottom: 16px;
+  display: block;
+  overflow: visible;
+}
+
+.chart canvas {
+  border-radius: 0;
+}
+
+.heatmap-legend {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  padding-right: 14px;
+  margin-top: 8px;
+}
+
+.legend-label {
+  font-size: 11px;
+  color: #656d76;
+}
+
+.legend-boxes {
+  display: flex;
+  gap: 2px;
+  margin: 0 4px;
+}
+
+.legend-box {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 40px 0;
+  color: #656d76;
+}
+
+.error {
+  color: #cf222e;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chart {
+    min-height: 100px;
+  }
+
+  .heatmap-legend {
+    justify-content: center;
+    padding-right: 0;
+  }
+}
+

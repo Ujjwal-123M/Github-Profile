@@ -1,0 +1,74 @@
+@if (loading) {
+  <div class="contribution-activity loading">
+    <p>Loading contribution activity...</p>
+  </div>
+} @else {
+  <div class="contribution-activity">
+    <div class="activity-header">
+      <h3 class="section-title">Contribution activity</h3>
+    </div>
+
+    <div class="month-header">{{ getCurrentMonth() }}</div>
+
+    <div class="activities-timeline">
+      @if (activities.length === 0) {
+        <p class="no-activity">No recent activity</p>
+      } @else {
+        @for (activity of activities; track activity.date + activity.type + $index) {
+          <div class="timeline-item">
+            <div class="timeline-marker">
+              <div class="timeline-line"></div>
+              <div class="timeline-dot" [class]="'dot-' + activity.type">
+                @if (activity.type === 'commit') {
+                  <svg class="activity-icon" aria-hidden="true" height="12" viewBox="0 0 16 16" version="1.1" width="12" fill="currentColor">
+                    <path d="M11.28 6.78a.75.75 0 0 0-1.06-1.06L7.25 8.69 5.78 7.22a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l3.5-3.5Z"></path>
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path>
+                  </svg>
+                } @else if (activity.type === 'pull_request') {
+                  <svg class="activity-icon" aria-hidden="true" height="12" viewBox="0 0 16 16" version="1.1" width="12" fill="currentColor">
+                    <path d="M1.5 3.25a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Zm5 0a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Zm5 0a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM2.25 7a.75.75 0 0 0 0 1.5c.966 0 1.75.784 1.75 1.75a.75.75 0 0 0 1.5 0A3.25 3.25 0 0 0 2.25 7ZM11 8.75a.75.75 0 0 1-.75-.75A3.25 3.25 0 0 0 7 4.75a.75.75 0 0 1 0-1.5A4.75 4.75 0 0 1 11.75 8a.75.75 0 0 1-.75.75ZM7.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM13 8.75a.75.75 0 0 1-.75-.75A3.25 3.25 0 0 0 9 4.75a.75.75 0 0 1 0-1.5A4.75 4.75 0 0 1 13.75 8a.75.75 0 0 1-.75.75Z"></path>
+                  </svg>
+                } @else if (activity.type === 'issue') {
+                  <svg class="activity-icon" aria-hidden="true" height="12" viewBox="0 0 16 16" version="1.1" width="12" fill="currentColor">
+                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path>
+                    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm6-1.25a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z"></path>
+                  </svg>
+                }
+              </div>
+            </div>
+            
+            <div class="activity-content-wrapper">
+              <div class="activity-item">
+                <div class="activity-content">
+                  <span class="activity-description">{{ activity.description }}</span>
+                  @if (activity.details && activity.type === 'pull_request') {
+                    <div class="activity-details-card">
+                      <div class="pr-header">
+                        <i class="fa-solid fa-code-merge" style="color: #B197FC;"></i>
+                        <a [href]="activity.url || '#'" class="pr-title" target="_blank" rel="noopener noreferrer">
+                          {{ activity.details }}
+                        </a>
+                      </div>
+                      <div class="pr-summary">
+                        Fix missing ignored patterns for windowtools. (#74) Summary by CodeRabbit New Features Added the ability to configure which parameter types shoul...
+                      </div>
+                      <div class="pr-meta">
+                        <span class="pr-changes">
+                          <span class="changes-add">+18</span>
+                          <span class="changes-del">-0</span>
+                          lines changed
+                        </span>
+                        <span class="pr-comments">1 comment</span>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <span class="activity-date">{{ activity.date }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </div>
+}

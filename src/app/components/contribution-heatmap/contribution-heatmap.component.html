@@ -1,0 +1,34 @@
+<div class="contribution-heatmap">
+  <div class="heatmap-header">
+    <h2 class="section-title">
+      <span>{{ getTotalContributions() }} contributions</span>
+      <span class="year-text">in the last year</span>
+    </h2>
+  </div>
+  
+  <div class="heatmap-container" *ngIf="!loading && !error && contributionData && contributionData.weeks && contributionData.weeks.length > 0">
+    <div #heatmapChart class="chart"></div>
+    
+    <div class="heatmap-legend">
+      <span class="legend-label">Less</span>
+      <div class="legend-boxes">
+        <div class="legend-box" style="background-color: #ebedf0;"></div>
+        <div class="legend-box" style="background-color: #9be9a8;"></div>
+        <div class="legend-box" style="background-color: #6dd585;"></div>
+        <div class="legend-box" style="background-color: #40c463;"></div>
+        <div class="legend-box" style="background-color: #30a14e;"></div>
+        <div class="legend-box" style="background-color: #216e39;"></div>
+      </div>
+      <span class="legend-label">More</span>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <p>Loading contribution data...</p>
+  </div>
+
+  <div class="error" *ngIf="error">
+    <p>{{ error }}</p>
+  </div>
+</div>
+

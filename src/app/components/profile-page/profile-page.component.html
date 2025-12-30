@@ -1,0 +1,107 @@
+<div class="profile-page">
+  <app-header
+    [username]="username"
+    [avatarUrl]="user?.avatar_url || 'https://github.com/identicons/github.png'"
+  ></app-header>
+
+  @if (loading) {
+  <div class="loading">
+    <div class="loading-content">
+      <p>Loading profile...</p>
+    </div>
+  </div>
+  } @else if (user) {
+  <div class="tabs-wrapper">
+    <app-tabs
+      [activeTab]="activeTab"
+      [reposCount]="user.public_repos"
+      [starsCount]="starsCount"
+      (tabChange)="setActiveTab($event)"
+    >
+    </app-tabs>
+  </div>
+
+  <div class="profile-container">
+    <div class="profile-sidebar-wrapper">
+      <app-profile-sidebar [user]="user"></app-profile-sidebar>
+    </div>
+
+    <div class="profile-main">
+      @if (activeTab === 'overview') {
+      <div class="overview-content">
+        <app-popular-repositories [repositories]="repositories" [username]="username">
+        </app-popular-repositories>
+
+        <app-contribution-heatmap [username]="username"></app-contribution-heatmap>
+
+        <app-activity-overview [username]="username"></app-activity-overview>
+
+        <app-contribution-activity [username]="username"></app-contribution-activity>
+      </div>
+      } @else if (activeTab === 'repositories') {
+      <div class="tab-content">
+        <app-popular-repositories
+          [repositories]="allRepositories.length > 0 ? allRepositories : repositories"
+          [username]="username"
+          title="Repositories"
+          [showCustomizeLink]="false"
+        >
+        </app-popular-repositories>
+      </div>
+      } @else if (activeTab === 'projects') {
+      <div class="tab-content">
+        <div class="projects-section">
+          <h2 class="section-title">Projects</h2>
+          <div class="projects-grid">
+            <div class="project-card" *ngFor="let project of projects">
+              <h3 class="project-name">{{ project.name }}</h3>
+              <p class="project-description">{{ project.description }}</p>
+              <div class="project-meta">
+                <span class="project-updated"
+                  >Updated {{ project.updated_at | date : 'MMM d' }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      } @else if (activeTab === 'packages') {
+      <div class="tab-content">
+        <div class="packages-section">
+          <h2 class="section-title">Packages</h2>
+          <div class="packages-grid">
+            <div class="package-card" *ngFor="let pkg of packages">
+              <h3 class="package-name">{{ pkg.name }}</h3>
+              <p class="package-description">{{ pkg.description }}</p>
+              <div class="package-meta">
+                <span class="package-version">v{{ pkg.version }}</span>
+                <span class="package-updated">Updated {{ pkg.updated_at | date : 'MMM d' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      } @else if (activeTab === 'stars') {
+      <div class="tab-content">
+        <app-popular-repositories
+          [repositories]="starredRepositories"
+          [username]="username"
+          title="Starred repositories"
+          [showCustomizeLink]="false"
+        >
+        </app-popular-repositories>
+      </div>
+      }
+    </div>
+  </div>
+  } @else if (error) {
+  <div class="error-container">
+    <div class="error-content">
+      <h2>Error</h2>
+      <p>{{ error }}</p>
+      <button (click)="loadUserProfile()" class="retry-button">Retry</button>
+    </div>
+  </div>
+  }
+  <app-footer></app-footer>
+</div>
